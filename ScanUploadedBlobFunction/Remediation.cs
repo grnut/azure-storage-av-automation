@@ -41,9 +41,10 @@ namespace ScanUploadedBlobFunction
             {
                 try
                 {
-                    string cleanContainerName = Environment.GetEnvironmentVariable("cleanContainerName");
+                    string cleanContainerName = scanResults.fileName.Split("@")[0];
+                    log.LogInformation("The cleanContainerName is " + cleanContainerName);
                     MoveBlob(scanResults.fileName, srcContainerName, cleanContainerName, log).GetAwaiter().GetResult();
-                    log.LogInformation("The file is clean. It has been moved from the unscanned container to the clean container");
+                    log.LogInformation("The file is clean. It has been moved from the unscanned container to the destination container");
                 }
 
                 catch (Exception e)
@@ -63,7 +64,9 @@ namespace ScanUploadedBlobFunction
             destContainer.CreateIfNotExists();
 
             var srcBlob = srcContainer.GetBlobClient(srcBlobName);
-            var destBlob = destContainer.GetBlobClient(srcBlobName);
+            // remove the pre-pended container name from the blob name
+            string destBlobName = srcBlobName.Substring(srcBlobName.IndexOf("@") + 1); 
+            var destBlob = destContainer.GetBlobClient(destBlobName);
 
             if (await srcBlob.ExistsAsync())
             {

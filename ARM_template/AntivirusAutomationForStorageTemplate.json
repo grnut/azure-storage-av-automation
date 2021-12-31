@@ -44,7 +44,7 @@
         },
         "appServicePlanSKU": {
             "type": "string",
-            "defaultValue": "S1",
+            "defaultValue": "P1V2",
             "allowedValues":[
                 "S1",
                 "S2",
