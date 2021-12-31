@@ -46,7 +46,7 @@ List of created resource:
     * The script also deploys the ARM template.
 
     
-> :warning: During execution .zip files (ScanHttpServer.zip, ScanUploadedBlobFunction.zip) will be created in their respective folders.     
+> :warning: During execution, .zip files (ScanHttpServer.zip, ScanUploadedBlobFunction.zip) will be created in their respective folders.     
 >
 >If the deployment fails for any reason then these zip files need to be deleted before running the script again. This is because if the script is run twice in a row without this step then the zip will "double up" it's contents and fail to be read properly in Azure.
 
