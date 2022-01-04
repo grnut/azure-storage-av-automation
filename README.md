@@ -42,8 +42,25 @@ List of created resource:
     ```
     git clone https://github.com/grnut/azure-storage-av-automation.git
     ```
-2. Open Storage AV Automation/Scripts/BuildAndDeploy.ps1 and run the script. During the execution, you will be prompted to enter your Azure credentials and the necessary parameters.
-    * The script also deploys the ARM template.
+
+2. Create a storage account within the target resource group and subscription to store the solution's source code - this must have a globally unique name.
+
+3. Create a "holding" container within the storage account you want to protect (e.g. "av-holding-container"). This is where files will first be stored as they wait to be scanned; once scanned the file will be moved to either its intended destination container or the *quarantine-files* container.
+
+4. Open Storage AV Automation/Scripts/BuildAndDeploy.ps1 and run the script. During the execution, you will be prompted to enter your Azure credentials and the necessary parameters:
+
+    - sourceCodeStorageAccountName - Storage account name to store the source code, must be public access enabled.
+    - sourceCodeContainerName - Container name to store the source code, can be new or existing, if already exists must be with public access.
+    - subscriptionID - Storage account to scan subscription ID.
+    - targetResourceGroup - Storage account to scan resource group name.
+    - targetStorageAccountName - Name of the storage account to scan.
+    - targetContainerName - Name of the container to scan.
+    - deploymentResourceGroupName - Resource group to deploy the AV system to.
+    - deploymentResourceGroupLocation - Resource group Geo location.
+    - vmUserName - VM username
+    - vmPassword - VM password
+
+5.  Once it is running, the script will deploy the ARM template, the progress of this can be tracked in the Azure portal via [Your target Resource Group] -> Deployments -> AntivirusAutomationForStorageTemplate
 
     
 > :warning: During execution, .zip files (ScanHttpServer.zip, ScanUploadedBlobFunction.zip) will be created in their respective folders.     
@@ -91,18 +108,6 @@ X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
         ```
 
     * The zip file must contain the ScanHttpServer binary files and runLoop.ps1 script to run the server on the VM.
-
-    * Build and Deploy Script Parameters:
-        * sourceCodeStorageAccountName - Storage account name to store the source code, must be public access enabled.
-        * sourceCodeContainerName - Container name to store the source code, can be new or existing, if already exists must be with public access.
-        * subscriptionID - Storage account to scan subscription ID.
-        * targetResourceGroup - Storage account to scan resource group name.
-        * targetStorageAccountName - Name of the storage account to scan.
-        * targetContainerName - Name of the container to scan.
-        * deploymentResourceGroupName - Resource group to deploy the AV system to.
-        * deploymentResourceGroupLocation - Resource group Geo location.
-        * vmUserName - VM username
-        * vmPassword - VM password
 
 [instalCliUrl]: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
