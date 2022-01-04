@@ -45,7 +45,7 @@ List of created resource:
 
 2. Create a storage account within the target resource group and subscription to store the solution's source code - this must have a globally unique name.
 
-3. Create a "holding" container within the storage account you want to protect (e.g. "av-holding-container"). This is where files will first be stored as they wait to be scanned; once scanned the file will be moved to either its intended destination container or the *quarantine-files* container.
+3. Create a "holding" container within the storage account you want to protect (_not the source code storage account you have just created_) e.g. "av-holding-container". This is where files will first be stored as they wait to be scanned; once scanned the file will be moved to either its intended destination container or the *quarantine-files* container.
 
 4. Open Storage AV Automation/Scripts/BuildAndDeploy.ps1 and run the script. During the execution, you will be prompted to enter your Azure credentials and the necessary parameters:
 
